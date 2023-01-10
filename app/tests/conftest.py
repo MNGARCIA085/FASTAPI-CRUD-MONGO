@@ -42,7 +42,8 @@ db = client.college
 
 
 """ FXITURES """
-import uuid
+#str(bson.Binary.from_uuid(uuid.UUID)),
+import uuid,bson
 # add an user to the database
 @pytest.fixture(scope='function')
 def add_movie():
@@ -50,7 +51,7 @@ def add_movie():
 
         new_movie = app.database["movies"].insert_one(
             {
-                #"_id":uuid.uuid4,
+                "_id":str(uuid.uuid4()),
                 "title": title,
                 "genres":genres,
             }

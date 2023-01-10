@@ -149,64 +149,9 @@ def add_review(request: Request): # maybe an id filter later
 
     lista = []
     for a in averages:
-        print(a)
-        lista.append({'title':a['title'],'score':a['reviews_average']})
+        lista.append({'title':a['title'],'score':a['reviews_average'],'count':a['reviews_count']})
 
     return lista
 
 
 
-
-
-
-
-
-
-
-
-
-"""
-
-QUERIES AND AGGREGATE FOR LIST MOVIES
-
-
-if some:
-        return list(request.app.database['movies'].find({'title':some}))
-    # other filters
-    #return list(request.app.database['movies'].find({'reviews.score' : {"$gt":27}}))
-    #return list(request.app.database['movies'].find({'genres' : {"$in":['drama']}}))
-    #suma = request.app.database['movies'].aggregate([{'$group':{'_id' : '$title', 'totaldocs' : { '$sum' : 1 }}}])
-    promedio = request.app.database['movies'].aggregate([
-            {
-                "$unwind":"$reviews"
-            },
-            {
-                "$group": {
-                    "_id": {
-                        "_id": "$_id",
-                        "title": "$title"
-                        },
-                    "reviews":{
-                        "$push": "$reviews.score"
-                    },
-                    "reviews_average": {
-                        "$avg": "$reviews.score"
-                    }
-                }
-            },
-            {
-                "$project":{
-                    "_id": 0,
-                    "title": "$_id.title",
-                    "reviews_average": 1,
-                    "reviews": 1
-                }
-            }
-    ])
-    for p in promedio:
-        print(p)
-
-
-
-
-"""

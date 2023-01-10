@@ -27,7 +27,7 @@ app.include_router(movies_routes.router)
 
 
 
-#https://www.mongodb.com/developer/languages/python/python-quickstart-fastapi/
+
 
 
 

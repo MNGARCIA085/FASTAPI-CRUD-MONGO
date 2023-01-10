@@ -12,6 +12,10 @@ router = APIRouter(
 
 @router.post("/", status_code=status.HTTP_201_CREATED,response_model=User)
 def create_user(request: Request, user: User = Body(...)):
+    # que no exista ya
+    if (request.app.database["users"].find_one({"username": user.username})) is not None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Username already taken")
+    # ingreso
     user = jsonable_encoder(user)
     new_user = request.app.database["users"].insert_one(user)
     created_user = request.app.database["users"].find_one(
