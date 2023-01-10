@@ -1,13 +1,11 @@
 from fastapi import FastAPI
 from pymongo import MongoClient
-from routes import router as book_router
-from movies import routes as movies_routes
 from settings import settings
+from movies import routes as movies_routes
+from users import routes as user_routes
 
 
 app = FastAPI()
-
-
 
 
 @app.on_event("startup")
@@ -21,15 +19,15 @@ def shutdown_db_client():
     
 
 
-
-#from prueba import routes as prueba_router
-#app.include_router(prueba_router.router)
-
-
-app.include_router(book_router, tags=["books"], prefix="/book")
+app.include_router(user_routes.router)
 
 
 app.include_router(movies_routes.router)
+
+
+
+
+#https://www.mongodb.com/developer/languages/python/python-quickstart-fastapi/
 
 
 

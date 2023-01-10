@@ -17,9 +17,15 @@ router = APIRouter(
 
 @router.post("/", response_description="Create a new book", 
                 status_code=status.HTTP_201_CREATED,
-                response_model=MovieUpdate)
-async def create_movie(request: Request, book: Movie = Body(...)): #async
-    return await add_movie(request,book)
+                response_model=MovieOut)
+def create_movie(request: Request, movie: Movie = Body(...)):
+    movie = jsonable_encoder(movie)
+    new_movie = request.app.database["movies"].insert_one(movie)
+    created_movie = request.app.database["movies"].find_one(
+        {"_id": new_movie.inserted_id}
+    )
+    return created_movie
+
 
 
 
@@ -82,18 +88,41 @@ def delete_movie(id: str, request: Request, response: Response):
 
 """
 
-REVIEWS, we need to add it to a movie
+REVIEWS, we need to add it to a movie; see the reviews for a movie....
 
 """
 
 
-@router.post("/review/{id}", response_description="Add a review to a movie")
+@router.post("/{id}/reviews/", response_description="Add a review to a movie")
 async def add_review(id: str, request: Request, review: Review = Body(...)):
+
+    # que el usuario exista
+
+
+    # que el usuario pueda ingresar una única review
+
     review = jsonable_encoder(review)
     update_result = request.app.database["movies"].update_one(
             {"_id": id}, {"$push": {'reviews':review}}
         )
     return {'Estado':'ok'}
+
+
+
+
+
+# datos de las películas
+# promedio de puntajes de todas las películas
+
+
+
+
+
+
+
+
+
+
 
 
 
