@@ -1,14 +1,14 @@
 import uuid
 from typing import Literal, Optional,List
 from pydantic import BaseModel, Field
-from users.models import User
+
 
 # va a estar embebido en movies
 class Review(BaseModel):
     text: str = Field(...)
     score: int = Field(ge=1, le=5)
-    user: uuid.UUID # el _id del usuario; lo validaremos a nivel de la app
-
+    #user: uuid.UUID # el _id del usuario; lo validaremos a nivel de la app
+    user: str = Field(...)
 
 
 class Movie(BaseModel):
