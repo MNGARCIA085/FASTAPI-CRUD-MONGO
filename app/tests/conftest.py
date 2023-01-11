@@ -1,7 +1,3 @@
-import os
-os.environ['RUN_ENV'] = 'test'
-
-
 from fastapi import FastAPI
 from pymongo import MongoClient
 from settings import settings
@@ -27,17 +23,9 @@ def shutdown_db_client():
 app.include_router(movies_routes.router)
 
 
-
-"""
-client = motor.motor_asyncio.AsyncIOMotorClient(os.environ["MONGODB_URL"])
-db = client.college
-"""
-
-
-
 """ FXITURES """
 
-# add an user to the database
+# add a movie to the database
 @pytest.fixture(scope='function')
 def add_movie():
     def _add_movie(title, genres=[]):

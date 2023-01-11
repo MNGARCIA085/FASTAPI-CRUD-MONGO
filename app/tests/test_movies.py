@@ -97,7 +97,7 @@ def test_edit_movie(add_movie):
 
 
 
-# delete an user
+# delete a movie
 def test_delete_user(add_movie):
     with TestClient(app) as client:
         # inserto un nuevo usuario
