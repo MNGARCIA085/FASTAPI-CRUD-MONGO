@@ -45,7 +45,7 @@ def find_movie(id: str, request: Request):
 
 
 
-@router.put("/{id}", response_description="Update a movie", response_model=Movie)
+@router.put("/{id}", status_code=status.HTTP_201_CREATED,response_description="Update a movie", response_model=Movie)
 def update_movie(id: str, request: Request, movie: MovieUpdate = Body(...)):
     movie = {k: v for k, v in movie.dict().items() if v is not None}
 

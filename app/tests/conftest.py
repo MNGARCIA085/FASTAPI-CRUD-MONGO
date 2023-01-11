@@ -6,10 +6,7 @@ from fastapi import FastAPI
 from pymongo import MongoClient
 from settings import settings
 from movies import routes as movies_routes
-import pytest
-
-
-
+import pytest,uuid
 
 app = FastAPI()
 
@@ -38,25 +35,26 @@ db = client.college
 
 
 
-
-
-
 """ FXITURES """
-#str(bson.Binary.from_uuid(uuid.UUID)),
-import uuid,bson
+
 # add an user to the database
 @pytest.fixture(scope='function')
 def add_movie():
     def _add_movie(title, genres=[]):
 
+        id = str(uuid.uuid4())
+
         new_movie = app.database["movies"].insert_one(
             {
-                "_id":str(uuid.uuid4()),
+                "_id":id,
                 "title": title,
                 "genres":genres,
             }
         )
 
+        created_movie = app.database["movies"].find_one(
+            {"_id": id}
+        )
 
-        return new_movie
+        return created_movie
     return _add_movie
